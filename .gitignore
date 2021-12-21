@@ -27,3 +27,4 @@ run
 build
 *.iml
 out
+/.env
