@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
 import java.net.URLClassLoader;
 import net.devtech.grossfabrichacks.unsafe.UnsafeUtil;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.game.GameProvider;
+import net.fabricmc.loader.impl.game.GameProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

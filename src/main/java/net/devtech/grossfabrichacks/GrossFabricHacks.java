@@ -1,18 +1,14 @@
 package net.devtech.grossfabrichacks;
 
 import java.io.InputStream;
-import net.devtech.grossfabrichacks.entrypoints.PrePrePreLaunch;
-import net.devtech.grossfabrichacks.instrumentation.InstrumentationApi;
-import net.devtech.grossfabrichacks.transformer.asm.AsmClassTransformer;
-import net.devtech.grossfabrichacks.transformer.asm.RawClassTransformer;
-import net.devtech.grossfabrichacks.unsafe.UnsafeUtil;
+
+import net.auoeke.reflect.Classes;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.LanguageAdapter;
 import net.fabricmc.loader.launch.knot.UnsafeKnotClassLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import user11681.dynamicentry.DynamicEntry;
-import user11681.reflect.Reflect;
 
 public class GrossFabricHacks implements LanguageAdapter {
     private static final Logger LOGGER = LogManager.getLogger("GrossFabricHacks");
@@ -86,11 +82,16 @@ public class GrossFabricHacks implements LanguageAdapter {
             for (int i = FabricLoader.getInstance().isDevelopmentEnvironment() ? 1 : 0; i < classCount; i++) {
                 final String name = classes[i];
                 final InputStream classStream = KnotClassLoader.getResourceAsStream(name.replace('.', '/') + ".class");
-                final byte[] bytecode = new byte[classStream.available()];
+                final byte[] bytecode = new byte[ classStream.available() ];
 
-                while (classStream.read(bytecode) != -1) {}
+                while ( classStream.read(bytecode) != -1 );
 
-                Reflect.defineClass(applicationClassLoader, name, bytecode, GrossFabricHacks.class.getProtectionDomain());
+                Classes.defineClass(
+                        applicationClassLoader,
+                        name,
+                        bytecode,
+                        GrossFabricHacks.class.getProtectionDomain()
+                );
             }
 
             LOGGER.warn("KnotClassLoader, you fool! Loading me was a grave mistake.");
@@ -100,6 +101,6 @@ public class GrossFabricHacks implements LanguageAdapter {
             throw new RuntimeException(throwable);
         }
 
-        DynamicEntry.executeOptionalEntrypoint("gfh:prePrePreLaunch", PrePrePreLaunch.class, PrePrePreLaunch::onPrePrePreLaunch);
+        DynamicEntry.tryExecute("gfh:prePrePreLaunch", PrePrePreLaunch.class, PrePrePreLaunch::onPrePrePreLaunch);
     }
 }

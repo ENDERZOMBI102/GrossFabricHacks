@@ -5,6 +5,7 @@ import net.devtech.grossfabrichacks.transformer.asm.AsmClassTransformer;
 import net.devtech.grossfabrichacks.transformer.asm.RawClassTransformer;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.MixinEnvironment;
+
 import org.spongepowered.asm.mixin.transformer.HackedMixinTransformer;
 
 /**
